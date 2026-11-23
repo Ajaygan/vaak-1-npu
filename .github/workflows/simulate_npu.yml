@@ -8,7 +8,7 @@ jobs:
   simulate-rtl:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout VAAK-1 RTL
+      - name: Checkout VAAK-1 RTL & Simulators
         uses: actions/checkout@v4
 
       - name: Install Open-Source Chip Simulator (Icarus Verilog)
@@ -23,3 +23,6 @@ jobs:
         run: |
           iverilog -g2012 -o vaak1_subsys_sim rtl/sram_weight_streamer.sv rtl/ternary_npu_core.sv rtl/tb/tb_vaak1_subsystem.sv
           vvp vaak1_subsys_sim
+
+      - name: Verify 1.58-Bit Model Quantization & 2MB SRAM Budget
+        run: python3 sim/ternary_sram_profiler.py
