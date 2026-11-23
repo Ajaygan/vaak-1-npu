@@ -16,5 +16,5 @@ jobs:
 
       - name: Compile & Run Ternary NPU Testbench
         run: |
-          iverilog -g2012 -o vaak1_sim rtl/ternary_npu_core.sv tb/tb_ternary_npu.sv
+          iverilog -g2012 -o vaak1_sim rtl/ternary_npu_core.sv rtl/tb/tb_ternary_npu.sv
           vvp vaak1_sim
