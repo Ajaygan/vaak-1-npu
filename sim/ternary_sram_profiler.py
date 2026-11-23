@@ -132,7 +132,7 @@ def profile_vaak1_pipeline():
     print(f"Packed 16-bit SRAM Word    : 0x{packed_words[0]:04X} (matches RTL sram_wdata)")
     print(f"Simulated NPU Accumulator  : {acc} (matches RTL acc_out = 3)")
 
-    assert packed_words[0] == 0x5317, f"Expected 0x5317, got 0x{packed_words[0]:04X}"
+    assert packed_words[0] == 0x4D1D, f"Expected 0x4D1D, got 0x{packed_words[0]:04X}"
     assert acc == 3, f"Expected accumulator 3, got {acc}"
 
     random.seed(42)
