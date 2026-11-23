@@ -1,0 +1,20 @@
+# VAAK-1 Milestone #4A: RTL-to-Gate Logic Synthesis Script (Yosys)
+# Converts behavioral SystemVerilog into physical logic gates and verifies 0 multipliers
+
+read_verilog -sv rtl/ternary_npu_core.sv
+hierarchy -check -top ternary_npu_core
+
+# Elaborate behavioral always blocks into flip-flops & multiplexers
+proc; opt
+
+# Extract arithmetic & technology-map to standard gate primitives
+alumacc; opt
+techmap; opt
+abc -g AND,OR,XOR,MUX
+clean -purge
+
+# Print exact gate-level silicon statistics
+stat
+
+# Export synthesized gate-level netlist
+write_verilog -noattr synth_ternary_npu_gates.v
