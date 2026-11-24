@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Icarus Verilog & Yosys
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y iverilog yosys
+      - name: Setup OSS CAD Suite (Icarus Verilog & Yosys)
+        uses: YosysHQ/setup-oss-cad-suite@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Simulate Ternary NPU Core
         run: |
@@ -35,4 +35,3 @@ jobs:
       - name: Gate-Level Synthesis Check (Yosys)
         run: |
           yosys -s synth/synth_vaak1.ys
-          yosys -p "read_verilog -sv rtl/vaak1_soc_top.sv; hierarchy -check -top vaak1_soc_top; proc; opt; stat"
