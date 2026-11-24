@@ -1,28 +1,38 @@
-name: VAAK-1 Silicon Verification
+name: VAAK-1 RTL & Synthesis CI
 
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  simulate-rtl:
+  verify-and-synthesize:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout VAAK-1 RTL & Simulators
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install Open-Source Chip Simulator (Icarus Verilog)
-        run: sudo apt-get update && sudo apt-get install -y iverilog
-
-      - name: Verify Standalone Ternary NPU Core
+      - name: Install Icarus Verilog & Yosys
         run: |
-          iverilog -g2012 -o vaak1_core_sim rtl/ternary_npu_core.sv rtl/tb/tb_ternary_npu.sv
-          vvp vaak1_core_sim
+          sudo apt-get update
+          sudo apt-get install -y iverilog yosys
 
-      - name: Verify SRAM Streamer + NPU Subsystem (DRAM-Free Burst)
+      - name: Simulate Ternary NPU Core
         run: |
-          iverilog -g2012 -o vaak1_subsys_sim rtl/sram_weight_streamer.sv rtl/ternary_npu_core.sv rtl/tb/tb_vaak1_subsystem.sv
-          vvp vaak1_subsys_sim
+          iverilog -g2012 -o sim_npu.out rtl/ternary_npu_core.sv rtl/tb/tb_ternary_npu.sv
+          vvp sim_npu.out
 
-      - name: Verify 1.58-Bit Model Quantization & 2MB SRAM Budget
-        run: python3 sim/ternary_sram_profiler.py
+      - name: Simulate DRAM-Free SRAM Subsystem
+        run: |
+          iverilog -g2012 -o sim_sub.out rtl/ternary_npu_core.sv rtl/sram_weight_streamer.sv rtl/tb/tb_vaak1_subsystem.sv
+          vvp sim_sub.out
+
+      - name: Simulate Full RISC-V + NPU SoC (vaak1_soc_top)
+        run: |
+          iverilog -g2012 -o sim_soc.out rtl/vaak1_soc_top.sv rtl/tb/tb_vaak1_soc.sv
+          vvp sim_soc.out
+
+      - name: Gate-Level Synthesis Check (Yosys)
+        run: |
+          yosys -s synth/synth_vaak1.ys
+          yosys -p "read_verilog -sv rtl/vaak1_soc_top.sv; hierarchy -check -top vaak1_soc_top; proc; opt; stat"
