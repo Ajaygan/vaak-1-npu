@@ -93,4 +93,379 @@
       padding: 1.5rem;
     }
     .card h2 {
-      font-size
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card .desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 1.25rem; }
+
+    .die-wrapper {
+      background: #06090e;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 1.25rem;
+      position: relative;
+    }
+    .die-pins {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: #fbbf24;
+      text-align: center;
+      letter-spacing: 3px;
+      margin-bottom: 0.5rem;
+    }
+    .die-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      border: 2px solid #334155;
+      padding: 1rem;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #0d1522 0%, #090d16 100%);
+    }
+    .die-block {
+      border: 1.5px solid #334155;
+      border-radius: 8px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .die-block:hover, .die-block.active {
+      border-color: var(--accent);
+      background: rgba(56, 189, 248, 0.12);
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(56, 189, 248, 0.18);
+    }
+    .die-block.sram { grid-column: span 2; border-color: rgba(16, 185, 129, 0.4); }
+    .die-block.sram.active { border-color: #34d399; background: rgba(16, 185, 129, 0.12); }
+    .die-block.npu { border-color: rgba(168, 85, 247, 0.45); }
+    .die-block.npu.active { border-color: #c084fc; background: rgba(168, 85, 247, 0.14); }
+
+    .block-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+    .die-block h3 { font-size: 0.98rem; margin-bottom: 0.2rem; }
+    .die-block p { font-size: 0.8rem; color: var(--muted); }
+
+    .inspector-box {
+      margin-top: 1rem;
+      background: #070b12;
+      border: 1px solid #1e293b;
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+    }
+    .inspector-box .title { color: #38bdf8; font-weight: 700; margin-bottom: 0.4rem; }
+    .inspector-box ul { list-style: none; color: #cbd5e1; }
+    .inspector-box li { margin-bottom: 0.3rem; }
+
+    .sim-controls {
+      display: flex;
+      gap: 0.6rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    button {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.55rem 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(56, 189, 248, 0.14);
+      color: #fff;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    button:hover { background: rgba(56, 189, 248, 0.28); }
+    button.primary { background: #0284c7; border-color: #38bdf8; }
+    button.primary:hover { background: #0369a1; }
+
+    .lane-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+    }
+    .lane-table th, .lane-table td {
+      padding: 0.5rem 0.6rem;
+      border-bottom: 1px solid #1e293b;
+      text-align: center;
+    }
+    .lane-table th { color: var(--muted); font-weight: 600; }
+    .trit-pos { color: #34d399; font-weight: 700; }
+    .trit-neg { color: #f87171; font-weight: 700; }
+    .trit-zero { color: #64748b; }
+
+    .bar-group { margin-bottom: 1.1rem; }
+    .bar-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-bottom: 0.35rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .bar-track {
+      height: 14px;
+      background: #0f172a;
+      border-radius: 99px;
+      overflow: hidden;
+      border: 1px solid #1e293b;
+    }
+    .bar-fill { height: 100%; border-radius: 99px; transition: width 0.4s ease; }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <h1>VAAK-1</h1>
+        <p>1.58-Bit Ternary Edge AI SoC • Zero External DRAM • Real-Time Wearable Speech Translation</p>
+      </div>
+      <div class="badges">
+        <span class="badge green">RTL & YOSYS VERIFIED</span>
+        <span class="badge">QFN-64 PACKAGE</span>
+        <a href="https://github.com/Ajaygan/vaak-1-npu" target="_blank" style="text-decoration:none;">
+          <span class="badge">GITHUB: AJAYGAN/VAAK-1-NPU ↗</span>
+        </a>
+      </div>
+    </header>
+
+    <section class="kpi-grid">
+      <div class="kpi">
+        <div class="label">Weight Precision</div>
+        <div class="val">1.58-Bit</div>
+        <div class="sub">{-1, 0, +1} Multiplier-Free MACs</div>
+      </div>
+      <div class="kpi">
+        <div class="label">External DRAM</div>
+        <div class="val">0 MB</div>
+        <div class="sub">100% On-Chip Weight Residency</div>
+      </div>
+      <div class="kpi">
+        <div class="label">SRAM Budget Used</div>
+        <div class="val">1.74 / 2.0 MB</div>
+        <div class="sub">7.28M Param Speech + NMT Pipeline</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Custom ISA Hook</div>
+        <div class="val">0x0B (custom-0)</div>
+        <div class="sub">Single-Cycle RISC-V NPU Dispatch</div>
+      </div>
+    </section>
+
+    <div class="grid-2">
+      <div class="card">
+        <h2>
+          <span>Interactive Silicon Die Floorplan</span>
+          <span style="font-size:0.75rem;color:#38bdf8;font-family:'JetBrains Mono',monospace;">CLICK ANY BLOCK</span>
+        </h2>
+        <p class="desc">Explore the internal microarchitecture of VAAK-1 synthesized in SystemVerilog (`rtl/vaak1_soc_top.sv`).</p>
+
+        <div class="die-wrapper">
+          <div class="die-pins">▪ ▪ ▪ ▪ 64-PIN GOLD WIREBOND RING (QFN-64 OPEN CAVITY) ▪ ▪ ▪ ▪</div>
+          <div class="die-grid">
+            <div class="die-block sram active" onclick="selectBlock('sram', this)">
+              <div class="block-tag">2.0 MB ON-CHIP SRAM // 8 BANKS</div>
+              <h3>Zero-DRAM Weight & Activation Memory</h3>
+              <p>Stores 7.28M packed ternary weights (1.44 MB) + KV/Audio buffers (0.30 MB) with 128-bit/cycle burst streaming.</p>
+            </div>
+            <div class="die-block" onclick="selectBlock('riscv', this)">
+              <div class="block-tag">32-BIT HOST CORE</div>
+              <h3>RISC-V Control + Custom ISA</h3>
+              <p>Decodes `vaak.run` (opcode `0x0B`) & MMIO CSRs (`0x4000_0000`).</p>
+            </div>
+            <div class="die-block npu" onclick="selectBlock('npu', this)">
+              <div class="block-tag">8-LANE TERNARY ENGINE</div>
+              <h3>Multiplier-Free MAC Array</h3>
+              <p>Executes 8 parallel add/sub/skip operations per clock with zero DSP multipliers.</p>
+            </div>
+          </div>
+          <div class="die-pins" style="margin-top:0.5rem;margin-bottom:0;">▪ ▪ ▪ ▪ ZERO-SKIPPING CLOCK GATE & IRQ CONTROLLER ▪ ▪ ▪ ▪</div>
+        </div>
+
+        <div class="inspector-box" id="inspector">
+          <div class="title">[MODULE] rtl/sram_weight_streamer.sv — 2 MB On-Chip SRAM</div>
+          <ul>
+            <li>• Width: 128-bit burst bus (8 lanes × 8 trits/cycle @ 2 bits/trit)</li>
+            <li>• Footprint: 1.74 MB allocated (87.0% utilization, 260 KB headroom)</li>
+            <li>• Power Savings: Eliminates ~120 pJ/bit off-chip LPDDR4 DRAM fetch penalty</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>
+          <span>Live 8-Lane NPU Cycle Trace</span>
+          <span id="cycleBadge" style="font-size:0.78rem;color:#34d399;font-family:'JetBrains Mono',monospace;">CYCLE 0 / 4</span>
+        </h2>
+        <p class="desc">Step through `tb_vaak1_soc.sv` executing a 4-tile ternary dot product with zero-skipping.</p>
+
+        <div class="sim-controls">
+          <button class="primary" onclick="stepCycle()">Step Clock (+1 Cycle)</button>
+          <button onclick="resetSim()">Reset Core</button>
+        </div>
+
+        <table class="lane-table">
+          <thead>
+            <tr>
+              <th>Lane</th>
+              <th>Act (INT8)</th>
+              <th>Trit</th>
+              <th>Op</th>
+              <th>Acc Out</th>
+            </tr>
+          </thead>
+          <tbody id="laneBody"></tbody>
+        </table>
+
+        <div style="margin-top:1rem;font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:#94a3b8;" id="simNote">
+          Ready: Dispatching `vaak.run rs1=0x10, rs2=4` from RISC-V host...
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Memory Footprint Comparison (7.28M Parameter Speech + Translation Model)</h2>
+      <p class="desc">Why standard FP16/INT8 models require power-hungry external DRAM on smart glasses—and how VAAK-1 fits entirely on-die.</p>
+
+      <div class="bar-group">
+        <div class="bar-header">
+          <span>FP16 Baseline (14.56 MB weights — Requires External DRAM)</span>
+          <span style="color:#f87171;">728% of On-Chip SRAM</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:#ef4444;"></div></div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-header">
+          <span>INT8 Quantized (7.28 MB weights — Still Exceeds 2 MB SRAM)</span>
+          <span style="color:#fbbf24;">364% of On-Chip SRAM</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:65%;background:#f59e0b;"></div></div>
+      </div>
+
+      <div class="bar-group" style="margin-bottom:0;">
+        <div class="bar-header">
+          <span>VAAK-1 1.58-Bit Ternary + Runtime Buffers (1.74 MB Total — 0 MB DRAM)</span>
+          <span style="color:#34d399;">87.0% of 2.0 MB SRAM (FITS ON-DIE)</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:17.4%;background:linear-gradient(90deg,#10b981,#38bdf8);"></div></div>
+      </div>
+    </div>
+
+    <footer>
+      Designed, Verified & Rendered by <strong>Ajay Divyesh M S</strong> •
+      <a href="https://github.com/Ajaygan/vaak-1-npu" target="_blank">View SystemVerilog RTL, Yosys Scripts & 3D Render on GitHub</a>
+    </footer>
+  </div>
+
+  <script>
+    const blockInfo = {
+      sram: {
+        title: "[MODULE] rtl/sram_weight_streamer.sv — 2 MB On-Chip SRAM",
+        items: [
+          "• Width: 128-bit burst bus (8 lanes × 8 trits/cycle @ 2 bits/trit)",
+          "• Footprint: 1.74 MB allocated (87.0% utilization, 260 KB headroom)",
+          "• Power Savings: Eliminates ~120 pJ/bit off-chip LPDDR4 DRAM fetch penalty"
+        ]
+      },
+      riscv: {
+        title: "[MODULE] rtl/vaak1_soc_top.sv — 32-Bit RISC-V Host & CSRs",
+        items: [
+          "• Custom Instruction: opcode 7'b0001011 (custom-0), funct3=000 (vaak.run)",
+          "• MMIO Map (0x4000_0000): CTRL (0x00), STATUS (0x04), BASE (0x08), LEN (0x0C), CYCLES (0x10)",
+          "• Hardware Chip ID: 0x5641414B (ASCII 'VAAK') + single-cycle IRQ completion"
+        ]
+      },
+      npu: {
+        title: "[MODULE] rtl/ternary_npu_core.sv — 8-Lane 1.58-Bit NPU",
+        items: [
+          "• Arithmetic: Multiplier-free INT8 add (+1), two's-complement sub (-1), or clock-gated hold (0)",
+          "• Zero-Skipping: ~33%–42% ternary sparsity directly disables accumulator toggling",
+          "• Synthesis: Verified gate-level clean via Yosys (synth/synth_vaak1.ys)"
+        ]
+      }
+    };
+
+    function selectBlock(key, el) {
+      document.querySelectorAll('.die-block').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      const info = blockInfo[key];
+      document.getElementById('inspector').innerHTML = `
+        <div class="title">${info.title}</div>
+        <ul>${info.items.map(i => `<li>${i}</li>`).join('')}</ul>
+      `;
+    }
+
+    const activations = [10, 11, 12, 13, 14, 15, 16, 17];
+    const tiles = [
+      { label: "+1", code: "2'b01", mult: 1,  note: "Tile 0 (SRAM 0x10): All +1 weights -> Accumulators add +Act[i]." },
+      { label: "+1", code: "2'b01", mult: 1,  note: "Tile 1 (SRAM 0x11): All +1 weights -> Accumulators reach 2 × Act[i]." },
+      { label: "0",  code: "2'b00", mult: 0,  note: "Tile 2 (SRAM 0x12): Zero trits -> Clock-gated zero-skip! 0 dynamic switching power." },
+      { label: "-1", code: "2'b11", mult: -1, note: "Tile 3 (SRAM 0x13): All -1 weights -> Subtract Act[i]. Final output = 1 × Act[i]. IRQ_DONE=1!" }
+    ];
+
+    let cycle = 0;
+    let acc = Array(8).fill(0);
+
+    function renderTable(curTile) {
+      const tbody = document.getElementById('laneBody');
+      tbody.innerHTML = activations.map((act, i) => {
+        const tritStr = curTile ? `${curTile.label} (${curTile.code})` : "—";
+        const cls = !curTile ? "trit-zero" : (curTile.mult > 0 ? "trit-pos" : (curTile.mult < 0 ? "trit-neg" : "trit-zero"));
+        const opStr = !curTile ? "IDLE" : (curTile.mult > 0 ? `ACC + ${act}` : (curTile.mult < 0 ? `ACC - ${act}` : "SKIP (0W)"));
+        return `
+          <tr>
+            <td>Lane ${i}</td>
+            <td>${act}</td>
+            <td class="${cls}">${tritStr}</td>
+            <td>${opStr}</td>
+            <td style="color:#fff;font-weight:700;">${acc[i]}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function stepCycle() {
+      if (cycle >= tiles.length) {
+        resetSim();
+        return;
+      }
+      const t = tiles[cycle];
+      acc = acc.map((v, i) => v + t.mult * activations[i]);
+      cycle++;
+      document.getElementById('cycleBadge').textContent = `CYCLE ${cycle} / 4`;
+      document.getElementById('simNote').textContent = t.note;
+      renderTable(t);
+    }
+
+    function resetSim() {
+      cycle = 0;
+      acc = Array(8).fill(0);
+      document.getElementById('cycleBadge').textContent = "CYCLE 0 / 4";
+      document.getElementById('simNote').textContent = "Ready: Dispatching `vaak.run rs1=0x10, rs2=4` from RISC-V host...";
+      renderTable(null);
+    }
+
+    renderTable(null);
+  </script>
+</body>
+</html>
